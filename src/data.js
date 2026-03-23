@@ -144,7 +144,7 @@ const products = [
     brand: "OnePlus",
   },
   {
-    id: 12,
+    id: 13,
     name: "OnePlus Nord Buds 3r TWS Earbuds",
     price: 1799,
     originalPrice: 2999,
@@ -154,6 +154,6 @@ const products = [
       "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Headphones%20And%20Earphones/Images/318487_0_Tp7jv81qAM.png?updatedAt=1756454924387?tr=w-400",
     isBestSeller: false,
     brand: "OnePlus",
-  }
+  },
 ];
 export default products;

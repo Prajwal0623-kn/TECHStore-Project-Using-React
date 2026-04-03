@@ -9,7 +9,24 @@ function App() {
 
   // State
   //Cart- array of products in cart
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem("techstore-cart");
+
+    if (savedCart) //true
+    {
+      try {
+        return JSON.parse(savedCart);
+      } catch (error) {
+        console.error("Problem !!!", error);
+        return [];
+      }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("techstore-cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   //Wishlist - array of product IDs that are wishlisted
   const [wishlist, setWishlist] = useState([]);
@@ -89,10 +106,7 @@ function App() {
   }
 
   //Calculate Total Number of Cart ITEMS
-  const cartCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  );
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   //Calculate Total Price
   const cartTotal = cartItems.reduce(
@@ -242,9 +256,7 @@ function App() {
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
-              {cartCount > 0 && (
-                <span className="cart-badge">{cartCount}</span>
-              )}
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </button>
             {cartTotal > 0 && (
               <span className="cart-total">₹{cartTotal.toLocaleString()}</span>
@@ -426,10 +438,7 @@ function App() {
 
       {/* Cart Overlay */}
       {showCart && (
-        <div
-          className="cart-overlay"
-          onClick={() => setShowCart(false)}
-        ></div>
+        <div className="cart-overlay" onClick={() => setShowCart(false)}></div>
       )}
 
       {/* Cart Sidebar */}

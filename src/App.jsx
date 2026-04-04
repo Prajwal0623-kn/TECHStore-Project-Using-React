@@ -29,7 +29,24 @@ function App() {
   }, [cartItems]);
 
   //Wishlist - array of product IDs that are wishlisted
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(() => {
+    const savedWishlist = localStorage.getItem("techstore-wishlist");
+
+    if (savedWishlist) {
+      try {
+        return JSON.parse(savedWishlist);
+      } catch (error) {
+        console.log("Can't fetch wishlist", error);
+        return [];
+      }
+    }
+
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("techstore-wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
 
   //Search - what user types in search box
   const [searchTerm, setSearchTerm] = useState("");
